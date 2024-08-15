@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Minder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+         }
+        
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 80%;
+        }
+        .container-wrapper {
+            width: 100%;
+            height: 100vh;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) 50px repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr) 50px repeat(4, 1fr);
+            gap: 10px;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 10px;
+            position: relative;
+            width: max-content;
+            height: max-content;
+
+        }
+
+        .grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (max-width: 1200px) {
+            .grid {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                font-size: 0.4rem;
+            }
+        }
+        a {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size:2em;
+            color: white;
+            text-decoration: none;
+        }
+        a::after {
+            content: attr(title);
+            display: block;
+            text-align: center;
+            margin-top: 5px; /* Adjust the spacing as needed */
+            color: rgb(0, 0, 0); /* Adjust the color as needed */
+            font-size: 0.65em;
+        }
+        .container a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 2em;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .green { background-color: #4CAF50; }
+        .yellow { background-color: #FFEB3B; color: #000; }
+        .blue { background-color: #2196F3; }
+        .red { background-color: #f44336; }
+        .axis-title {
+            display: flex;
+            font-weight: bold;
+            font-size: 14px; /* Adjust size as needed */
+            color: #fff; /* Axis label color */
+        }
+        .axis::before, .axis::after {
+            content: '';
+            display: block;
+            border: solid 20px transparent;
+            margin: 10px;
+        }
+    
+    /*  .pleasantness {
+            writing-mode: vertical-rl;
+            color: #fff;
+            position: absolute;
+            padding: 50px 0; 
+            text-align: center;
+            height: 200px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translateY(-50%);
+            left: 5%;
+        }
+
+        .pleasantness::before {
+            content: '';
+            position: absolute;
+            top: 0; 
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #fff; 
+        }
+
+        .pleasantness::after {
+            content: '';
+            position: absolute;
+            bottom: 0; 
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+        }
+       
+        */
+        
+        .pleasantness {
+            writing-mode: vertical-rl;
+            color: #fff;
+            display: inline-flex;
+            transform: translateY(-100%);
+        }
+        .pleasantness::before {
+            top: 0; 
+            border-bottom-color: #fff;
+            display: inline-block;
+        }
+        .pleasantness::after {
+            bottom: 0;
+            border-top-color: #fff;
+            display: inline-block;
+        }        
+        
+        .energy {
+            transform: translateX(-50%);
+            color: #fff;
+            display: inline-flex;
+        }
+        .energy::before {
+            border-left: none;
+            border-right-color: #fff;
+            display: inline-block;
+        }
+        .energy::after {
+            border-right: none;
+            border-left-color: #fff;
+            display: inline-block;
+        }        
+        .footnote 
+        {
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #666;
+            text-align: center; /* Center the text */
+        }
+        .center-grid {
+            grid-column: 5 / 6; /* Center column */
+            grid-row: 5 / 6;    /* Center row */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center-image {
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+            border-radius: 100px;
+        }
+        .axis-label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px; /* Adjust size as needed */
+            color: #fff; /* Axis label color */
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <h1>To check your vibe, rate how pleasant and energized you're feeling on a scale from 🤮 (-3, major ick) to 🔥 (+3, totally fire).</h1>
+        <div class="container">
+            <!-- Pleasantness Axis Labels -->
+            <div class="axis-label" style="grid-column: 1 / 2; grid-row: 5 / 6;"></div>
+            <div class="axis-label" style="grid-column: 2 / 3; grid-row: 5 / 6;">-3</div>
+            <div class="axis-label" style="grid-column: 3 / 4; grid-row: 5 / 6;">-2</div>
+            <div class="axis-label" style="grid-column: 4 / 5; grid-row: 5 / 6;">-1</div>
+            <div class="axis-label" style="grid-column: 6 / 7; grid-row: 5 / 6;">+1</div>
+            <div class="axis-label" style="grid-column: 7 / 8; grid-row: 5 / 6;">+2</div>
+            <div class="axis-label" style="grid-column: 8 / 9; grid-row: 5 / 6;">+3</div>
+            <div class="axis-label" style="grid-column: 9 / 10; grid-row: 5 / 6;"></div>
+        
+            <!-- Energy Axis Labels -->
+            <div class="axis-label" style="grid-column: 5 / 6; grid-row: 1 / 2;"></div>
+            <div class="axis-label" style="grid-column: 5 / 6; grid-row: 2 / 3;">+3</div>
+            <div class="axis-label" style="grid-column: 5 / 6; grid-row: 3 / 4;">+2</div>
+            <div class="axis-label" style="grid-column: 5 / 6; grid-row: 4 / 5;">+1</div>
+            <div class="axis-label" style="grid-column: 5 / 6; grid-row: 6 / 7;">-1</div>
+            <div class="axis-label" style="grid-column: 5 / 6; grid-row: 7 / 8;">-2</div>
+            <div class="axis-label" style="grid-column: 5 / 6; grid-row: 8 / 9;">-3</div>
+            <div class="axis-label" style="grid-column: 5 / 6; grid-row: 9 / 10;"></div>
+
+            <!-- Green -->
+        <!-- 
+            <a href="#" class="green" title="Serene" style="grid-column: 1; grid-row: 1;">🌿</a>
+            <a href="#" class="green" title="Fulfilled" style="grid-column: 2; grid-row: 1;">🏆</a>
+            <a href="#" class="green" title="Calm" style="grid-column: 3; grid-row: 1;">🧘</a>
+            <a href="#" class="green" title="Balanced" style="grid-column: 4; grid-row: 1;">⚖️</a>
+            <a href="#" class="green" title="Easygoing" style="grid-column: 1; grid-row: 2;">🌴</a>
+            <a href="#" class="green" title="Chill" style="grid-column: 2; grid-row: 2;">❄️</a>
+            <a href="#" class="green" title="Thoughtful" style="grid-column: 3; grid-row: 2;">💭</a>
+            <a href="#" class="green" title="Content" style="grid-column: 4; grid-row: 2;">😊</a>
+            <a href="#" class="green" title="Satisfied" style="grid-column: 1; grid-row: 3;">😌</a>
+            <a href="#" class="green" title="Grateful" style="grid-column: 2; grid-row: 3;">🙏</a>
+            <a href="#" class="green" title="Tranquil" style="grid-column: 3; grid-row: 3;">🏞️</a>
+            <a href="#" class="green" title="Relaxed" style="grid-column: 4; grid-row: 3;">🛀</a>
+            <a href="#" class="green" title="Comfy" style="grid-column: 1; grid-row: 4;">🛋️</a>
+            <a href="#" class="green" title="Complacent" style="grid-column: 2; grid-row: 4;">😌</a>
+            <a href="#" class="green" title="Peaceful" style="grid-column: 3; grid-row: 4;">☮️</a>
+            <a href="#" class="green" title="Mellow" style="grid-column: 4; grid-row: 4;">🍃</a> 
+        -->
+
+            <a href="#" class="green" title="Serene" style="grid-column: 2; grid-row: 2;">🍃</a>
+            <a href="#" class="green" title="Content" style="grid-column: 3; grid-row: 2;">😇</a>
+            <a href="#" class="green" title="Fulfilled" style="grid-column: 4; grid-row: 2;">🏆</a>
+            <a href="#" class="green" title="Tranquil" style="grid-column: 2; grid-row: 3;">🏞️</a>
+            <a href="#" class="green" title="Grateful" style="grid-column: 3; grid-row: 3;">🙏</a>
+            <a href="#" class="green" title="Balanced" style="grid-column: 4; grid-row: 3;">⚖️</a>
+            <a href="#" class="green" title="Peaceful" style="grid-column: 2; grid-row: 4;">☮️</a>
+            <a href="#" class="green" title="Chill" style="grid-column: 3; grid-row: 4;">❄️</a>
+            <a href="#" class="green" title="Calm" style="grid-column: 4; grid-row: 4;">😌</a>
+            
+            <!-- Yellow -->
+            <!-- <a href="#" class="yellow" title="Lively" style="grid-column: 6; grid-row: 1;">🎉</a>
+            <a href="#" class="yellow" title="Upbeat" style="grid-column: 7; grid-row: 1;">😃</a>
+            <a href="Excited.html" class="yellow" title="Excited" style="grid-column: 8; grid-row: 1;">🤩</a>
+            <a href="#" class="yellow" title="Ecstatic" style="grid-column: 9; grid-row: 1;">😆</a>
+            <a href="#" class="yellow" title="Enthusiastic" style="grid-column: 6; grid-row: 2;">🤗</a>
+            <a href="#" class="yellow" title="Energized" style="grid-column: 7; grid-row: 2;">⚡</a>
+            <a href="#" class="yellow" title="Inspired" style="grid-column: 8; grid-row: 2;">✨</a>
+            <a href="#" class="yellow" title="Hyper" style="grid-column: 9; grid-row: 2;">😜</a>
+            <a href="#" class="yellow" title="Motivated" style="grid-column: 6; grid-row: 3;">🚀</a>
+            <a href="#" class="yellow" title="Surprised" style="grid-column: 7; grid-row: 3;">😲</a>
+            <a href="#" class="yellow" title="Focused" style="grid-column: 8; grid-row: 3;">🎯</a>
+            <a href="#" class="yellow" title="Pleasant" style="grid-column: 9; grid-row: 3;">😊</a>
+            <a href="#" class="yellow" title="Joyful" style="grid-column: 6; grid-row: 4;">😁</a>
+            <a href="#" class="yellow" title="Blissful" style="grid-column: 7; grid-row: 4;">😇</a>
+            <a href="#" class="yellow" title="Hopeful" style="grid-column: 8; grid-row: 4;">🌟</a>
+            <a href="#" class="yellow" title="Happy" style="grid-column: 9; grid-row: 4;">😊</a>
+-->
+            <a href="#" class="yellow" title="Blissful" style="grid-column: 6; grid-row: 2;">🤗</a>
+            <a href="#" class="yellow" title="Thrilled" style="grid-column: 7; grid-row: 2;">🎉</a>
+            <a href="#" class="yellow" title="Ecstatic" style="grid-column: 8; grid-row: 2;">✨</a>
+            <a href="#" class="yellow" title="Hopeful" style="grid-column: 6; grid-row: 3;">🚀</a>
+            <a href="#" class="yellow" title="Motivated" style="grid-column: 7; grid-row: 3;">🎯</a>
+            <a href="Excited.html" class="yellow" title="Excited" style="grid-column: 8; grid-row: 3;">🤩</a>
+            <a href="#" class="yellow" title="Pleasant" style="grid-column: 6; grid-row: 4;">😊</a>
+            <a href="#" class="yellow" title="Happy" style="grid-column: 7; grid-row: 4;">😃</a>
+            <a href="#" class="yellow" title="Hyper" style="grid-column: 8; grid-row: 4;">⚡</a>
+
+            <!-- Blue -->
+          <!--   <a href="sad.html" class="blue" title="Sad" style="grid-column: 1; grid-row: 6;">😢</a>
+            <a href="#" class="blue" title="Lonely" style="grid-column: 2; grid-row: 6;">😔</a>
+            <a href="#" class="blue" title="Tired" style="grid-column: 3; grid-row: 6;">😴</a>
+            <a href="#" class="blue" title="Bored" style="grid-column: 4; grid-row: 6;">😐</a>
+            <a href="#" class="blue" title="Glum" style="grid-column: 1; grid-row: 7;">😞</a>
+            <a href="#" class="blue" title="Drained" style="grid-column: 2; grid-row: 7;">😫</a>
+            <a href="#" class="blue" title="Apathetic" style="grid-column: 3; grid-row: 7;">😒</a>
+            <a href="#" class="blue" title="Down" style="grid-column: 4; grid-row: 7;">😟</a>
+            <a href="#" class="blue" title="Pessimistic" style="grid-column: 1; grid-row: 8;">🙁</a>
+            <a href="#" class="blue" title="Concerned" style="grid-column: 2; grid-row: 8;">😟</a>
+            <a href="#" class="blue" title="Exhausted" style="grid-column: 3; grid-row: 8;">😩</a>
+            <a href="#" class="blue" title="Miserable" style="grid-column: 4; grid-row: 8;">😖</a>
+            <a href="#" class="blue" title="Depressed" style="grid-column: 1; grid-row: 9;">😕</a>
+            <a href="#" class="blue" title="Spent" style="grid-column: 2; grid-row: 9;">😵</a>
+            <a href="#" class="blue" title="Alienated" style="grid-column: 3; grid-row: 9;">😓</a>
+            <a href="#" class="blue" title="Despair" style="grid-column: 4; grid-row: 9;">😞</a> 
+        -->
+            <a href="#" class="blue" title="Fatigued" style="grid-column: 2; grid-row: 6;">😵</a>
+            <a href="#" class="blue" title="Tired" style="grid-column: 3; grid-row: 6;">😴</a>
+            <a href="#" class="blue" title="Bored" style="grid-column: 4; grid-row: 6;">😐</a>
+            <a href="#" class="blue" title="Exhausted" style="grid-column: 2; grid-row: 7;">😫</a>
+            <a href="#" class="blue" title="Pessimistic" style="grid-column: 3; grid-row: 7;">😢</a>
+            <a href="sad.html" class="blue" title="Sad" style="grid-column: 4; grid-row: 7;">😟</a>
+            <a href="#" class="blue" title="Depressed" style="grid-column: 2; grid-row: 8;">😕</a>
+            <a href="#" class="blue" title="Disgusted" style="grid-column: 3; grid-row: 8;">🤢</a>
+            <a href="#" class="blue" title="Miserable" style="grid-column: 4; grid-row: 8;">😩</a>
+
+            <!-- Red -->
+            <!--   <a href="#" class="red" title="Tense" style="grid-column: 6; grid-row: 6;">😬</a>
+            <a href="#" class="red" title="Nervous" style="grid-column: 7; grid-row: 6;">😟</a>
+            <a href="#" class="red" title="Restless" style="grid-column: 8; grid-row: 6;">😖</a>
+            <a href="#" class="red" title="Frustrated" style="grid-column: 9; grid-row: 6;">😤</a>
+            <a href="Angry.html" class="red" title="Angry" style="grid-column: 6; grid-row: 7;">😠</a>
+            <a href="#" class="red" title="Annoyed" style="grid-column: 7; grid-row: 7;">😒</a>
+            <a href="#" class="red" title="Stressed" style="grid-column: 8; grid-row: 7;">😰</a>
+            <a href="#" class="red" title="Anxious" style="grid-column: 9; grid-row: 7;">😟</a>
+            <a href="#" class="red" title="Agitated" style="grid-column: 6; grid-row: 8;">😡</a>
+            <a href="#" class="red" title="Mad" style="grid-column: 7; grid-row: 8;">😠</a>
+            <a href="#" class="red" title="Furious" style="grid-column: 8; grid-row: 8;">😤</a>
+            <a href="#" class="red" title="Enraged" style="grid-column: 9; grid-row: 8;">😡</a>
+            <a href="#" class="red" title="Irritated" style="grid-column: 6; grid-row: 9;">😤</a>
+            <a href="#" class="red" title="Hostile" style="grid-column: 7; grid-row: 9;">😠</a>
+            <a href="#" class="red" title="Belligerent" style="grid-column: 8; grid-row: 9;">👿</a>
+            <a href="#" class="red" title="Indignant" style="grid-column: 9; grid-row: 9;">😤</a>
+        -->
+            <a href="#" class="red" title="Annoyed" style="grid-column: 6; grid-row: 6;">😒</a>
+            <a href="#" class="red" title="Restless" style="grid-column: 7; grid-row: 6;">😟</a>
+            <a href="#" class="red" title="Stressed" style="grid-column: 8; grid-row: 6;">😖</a>
+            <a href="Angry.html" class="red" title="Angry" style="grid-column: 6; grid-row: 7;">😠</a>
+            <a href="#" class="red" title="Frustrated" style="grid-column: 7; grid-row: 7;">😤</a>
+            <a href="#" class="red" title="Furious" style="grid-column: 8; grid-row: 7;">😡</a>
+            <a href="#" class="red" title="Irritated" style="grid-column: 6; grid-row: 8;">😬</a>
+            <a href="#" class="red" title="Agitated" style="grid-column: 7; grid-row: 8;">😰</a>
+            <a href="#" class="red" title="Hostile" style="grid-column: 8; grid-row: 8;">🤬</a>
+           
+
+
+            <!-- centre image -->
+            <div class="center-grid">
+                <img src="Logo wihtout text.png" alt="Center Image" class="center-image">
+            </div>
+            <!-- Pleasantness Label -->
+            <div class="axis pleasantness" style="grid-column: 1; grid-row: 5 / 6; align-items: center; padding-right: 5px;">Pleasantness</div>
+            <div class="axis pleasantness" style="grid-column: 9; grid-row: 5 / 6; align-items: center; padding-left: 5px;">Pleasantness</div>
+            
+            <!-- Energy Label -->
+            <div class="axis energy" style="grid-column: 5 / 6; grid-row: 1; align-items: center; padding-bottom: 5px;">Energy</div>
+            <div class="axis energy" style="grid-column: 5 / 6; grid-row: 9; align-items: center; padding-top: 5px;">Energy</div>
+        </div>
+        <div class="footnote">
+            Reference: Inspired by Marc Brackett, <i>"Permission to Feel"</i> 2019
+        </div>
+    </div>
+</body>
+</html>
