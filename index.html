@@ -31,6 +31,8 @@
             text-align: center;
             width: 80%;
         }
+
+        /* Container Wrapper */
         .container-wrapper {
             justify-content: center;  /* Center the container horizontally */
             align-items: center;      /* Center the container vertically */
@@ -38,6 +40,8 @@
             padding: 20px;            /* Add some padding to ensure the container doesn't touch the edges */
             box-sizing: border-box;   /* Ensure padding is included in the height/width calculations */
         }
+
+        /* Default Grid Container */
         .container {
             display: grid;
             grid-template-columns: repeat(4, 1fr) 50px repeat(4, 1fr);
@@ -52,6 +56,8 @@
             overflow: auto;           /* Allow scrolling if content overflows */
             position:relative;
         }
+
+        /* Grid Item Styling */
         .grid {
             display: flex;
             flex-direction: column;
@@ -67,23 +73,7 @@
             height: 100%;
         }
 
-        @media (max-width: 1200px) {
-            .grid {
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .grid {
-                font-size: 0.6rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .grid {
-                font-size: 0.4rem;
-            }
-        }
+        /* Link Styling */
         a {
             display: flex;
             flex-direction: column;
@@ -112,16 +102,22 @@
             border-radius: 10px;
             text-align: center;
         }
+
+        /* Color Classes */
         .green { background-color: #4CAF50; }
         .yellow { background-color: #FFEB3B; color: #000; }
         .blue { background-color: #2196F3; }
         .red { background-color: #f44336; }
+        
+        /* Axis styling */
         .axis-title {
             display: flex;
             font-weight: bold;
-            font-size: 14px; /* Adjust size as needed */
-            color: #fff; /* Axis label color */
+            color: #ffff; /* Axis label color */
+            position: relative; /* For positioning arrows */
         }
+
+        /* Arrows for axis labels */
         .axis::before, .axis::after {
             content: '';
             display: block;
@@ -160,7 +156,9 @@
             border-right: none;
             border-left-color: #fff;
             display: inline-block;
-        }        
+        }
+
+        /* Footnote styling */
         .footnote 
         {
             margin-top: 20px;
@@ -168,6 +166,8 @@
             color: #666;
             text-align: center; /* Center the text */
         }
+
+        /* Center grid item */
         .center-grid {
             grid-column: 5 / 6; /* Center column */
             grid-row: 5 / 6;    /* Center row */
@@ -181,14 +181,159 @@
             height: auto;
             border-radius: 100px;
         }
-        .axis-label {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 14px; /* Adjust size as needed */
-            color: #fff; /* Axis label color */
-        }
+/* Media Queries */
+
+/* Medium Screens (Tablets, small laptops) */
+@media (max-width: 1024px) {
+
+    h1 {
+        margin-bottom: 15px;  /* Reduce margin on smaller screens */
+        font-size: 2em;       /* Adjust font size */
+        width: 90%;           /* Adjust width to ensure better fit */
+    }
+
+    .container-wrapper {
+        padding: 15px;  /* Reduce padding */
+    }
+
+    .container {
+        gap: 8px;
+        padding: 8px;
+        grid-template-columns: repeat(4, 0.8fr) 40px repeat(4, 0.8fr); /* Adjust column widths */
+        grid-template-rows: repeat(4, 0.8fr) 40px repeat(4, 0.8fr);    /* Adjust row heights */
+    }
+
+    .grid {
+        padding: 15px; /* Reduce grid item padding */
+    }
+
+    a {
+        font-size: 1.8em; /* Adjust font size */
+    }
+
+    a::after {
+        font-size: 0.6em; /* Adjust after element font size */
+    }
+
+    .container a {
+        font-size: 1.8em;
+        padding: 15px;
+    }
+    .axis-title {
+        font-size: 12px;
+    }
+    .axis::before, 
+    .axis::after {
+        border-width: 15px;
+        margin: 8px;
+    }
+    .center-image {
+        width: 80px;
+    }
+}
+
+/* Small Screens (Phones, small tablets) */
+@media (max-width: 768px) {
+
+    h1 {
+        margin-bottom: 10px;  /* Further reduce margin */
+        font-size: 1.8em;     /* Further reduce font size */
+        width: 95%;           /* Adjust width to fit better on smaller screens */
+    }
+    .container-wrapper {
+        padding: 10px;  /* Further reduce padding */
+    }
+
+    .container {
+        gap: 6px;
+        padding: 6px;
+        grid-template-columns: repeat(4, 0.6fr) 30px repeat(4, 0.6fr);
+        grid-template-rows: repeat(4, 0.6fr) 30px repeat(4, 0.6fr);
+    }
+
+    .grid {
+        padding: 10px; /* Further reduce grid item padding */
+    }
+
+    a {
+        font-size: 1.5em; /* Further adjust font size */
+    }
+
+    a::after {
+        font-size: 0.5em; /* Further adjust after element font size */
+    }
+
+    .container a {
+        font-size: 1.5em;
+        padding: 10px;
+    }
+    .axis-title {
+        font-size: 10px;
+    }
+    .axis::before, 
+    .axis::after {
+        border-width: 10px;
+        margin: 6px;
+    }
+    .center-image {
+        width: 60px;
+    }
+    .footnote {
+        font-size: 0.7em;
+    }
+}
+
+/* Extra Small Screens (Small phones) */
+@media (max-width: 480px) {
+
+    h1 {
+        margin-bottom: 5px;   /* Minimal margin */
+        font-size: 1.5em;     /* Smaller font size */
+        width: 100%;          /* Ensure it takes full width */
+    }
+    
+    .container-wrapper {
+        padding: 5px;  /* Minimal padding */
+    }
+
+    .container {
+        gap: 4px;
+        padding: 4px;
+        grid-template-columns: repeat(4, 0.4fr) 20px repeat(4, 0.4fr);
+        grid-template-rows: repeat(4, 0.4fr) 20px repeat(4, 0.4fr);
+    }
+
+    .grid {
+        padding: 5px; /* Minimal grid item padding */
+    }
+
+    a {
+        font-size: 1.2em; /* Smaller font size */
+    }
+
+    a::after {
+        font-size: 0.4em; /* Adjust after element font size */
+    }
+
+    .container a {
+        font-size: 1.2em;
+        padding: 5px;
+    }
+    .axis-title {
+        font-size: 8px;
+    }
+    .axis::before, 
+    .axis::after {
+        border-width: 8px;
+        margin: 4px;
+    }
+    .center-image {
+        width: 50px;
+    }
+    .footnote {
+        font-size: 0.6em;
+    }
+}
     </style>
 </head>
 <body>
@@ -274,7 +419,7 @@
             <div class="axis energy" style="grid-column: 5 / 6; grid-row: 9; align-items: center; padding-top: 5px;">Energy</div>
         </div>
         <div class="footnote">
-            Reference: Inspired by Marc Brackett, <i>"Permission to Feel"</i> 2019
+            Reference: Adapted from the Geneva Emotional Wheel and Moodmeter by Marc Brackett, a tool to help you better understand your emotional state and regulate your emotions for a better quality of life.
         </div>
     </div>
 </body>
