@@ -34,13 +34,11 @@
             width: 80%;
         }
         .container-wrapper {
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: center;  /* Center the container horizontally */
+            align-items: center;      /* Center the container vertically */
+            height: 100vh;            /* Make the flex-container fill the entire viewport height */
+            padding: 20px;            /* Add some padding to ensure the container doesn't touch the edges */
+            box-sizing: border-box;   /* Ensure padding is included in the height/width calculations */
         }
         .container {
             display: grid;
@@ -50,15 +48,23 @@
             padding: 10px;
             background-color: #333;
             border-radius: 10px;
-            position: relative;
-            width: max-content;
-            height: max-content;
+            box-sizing: border-box;
+            max-width: 100%;          /* Ensure the container doesn't overflow the screen width */
+            max-height: 100%;         /* Ensure the container doesn't overflow the screen height */
+            overflow: auto;           /* Allow scrolling if content overflows */
+            position:relative;
         }
         .grid {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            background-color: #555;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            box-sizing: border-box;
             width: 100%;
             height: 100%;
         }
